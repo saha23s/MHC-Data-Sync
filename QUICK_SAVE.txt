@@ -1,0 +1,43 @@
+cd /media/imero/Elements/experimentData && mkdir pp_2 && cd pp_2 && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images && cd /media/imero/Elements/bagfiles && for topic in `rostopic list -b pp_2.bag` ; do rostopic echo -p -b pp_2.bag $topic > pp_2-${topic//\//_}.csv ; done && cd /media/imero/Elements/bagfiles && mv /media/imero/Elements/bagfiles/pp_2-*.csv /media/imero/Elements/experimentData/pp_2/csvFiles && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/pp_2.bag" "/media/imero/Elements/experimentData/pp_2/kinova_color_images" "/cam_1/color/image_raw" && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/pp_2.bag" "/media/imero/Elements/experimentData/pp_2/external_color_images" "/cam_2/color/image_raw" && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_images.py "/media/imero/Elements/bagfiles/pp_2.bag" "/media/imero/Elements/experimentData/pp_2/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/Elements/bagfiles/pp_2.bag" "/media/imero/Elements/experimentData/pp_2/external_depth_images" "/cam_2/depth/image_rect_raw" && rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/pp_2.bag /cam_1/depth/points /media/imero/Elements/experimentData/pp_2/kinova_pointClouds
+
+for FILE in *.bag; do cd /media/imero/Elements/experimentData && mkdir ${FILE//.bag/""} && cd ${FILE//.bag/""} && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images && cd /media/imero/Elements/bagfiles && for topic in `rostopic list -b ${FILE//.bag/""}.bag` ; do rostopic echo -p -b ${FILE//.bag/""}.bag $topic > ${FILE//.bag/""}-${topic//\//_}.csv ; done ;done
+
+cd /media/imero/Elements/experimentData && mkdir ${FILE//.bag/""} && cd ${FILE//.bag/""} && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images && cd /media/imero/Elements/bagfiles && for topic in `rostopic list -b ${FILE//.bag/""}.bag` ; do rostopic echo -p -b ${FILE//.bag/""}.bag $topic > ${FILE//.bag/""}-${topic//\//_}.csv ; done 
+
+&& cd /media/imero/Elements/bagfiles && mv /media/imero/Elements/bagfiles/${FILE//.bag/""}-*.csv /media/imero/Elements/experimentData/${FILE//.bag/""}/csvFiles && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/${FILE//.bag/""}.bag" "/media/imero/Elements/experimentData/${FILE//.bag/""}/kinova_color_images" "cam_1/color/image_raw" && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/${FILE//.bag/""}.bag" "/media/imero/Elements/experimentData/${FILE//.bag/""}/external_color_images" "/cam_2/color/image_raw" && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_images.py "/media/imero/Elements/bagfiles/${FILE//.bag/""}.bag" "/media/imero/Elements/experimentData/${FILE//.bag/""}/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/Elements/bagfiles/${FILE//.bag/""}.bag" "/media/imero/Elements/experimentData/${FILE//.bag/""}/external_depth_images" "/cam_2/depth/image_rect_raw" && rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/${FILE//.bag/""}.bag /cam_1/depth/points /media/imero/Elements/experimentData/${FILE//.bag/""}/kinova_pointClouds
+
+for FILE in *.bag; do cd ~/Desktop/picke23a/data_recording_basics && python bag_to_colorImages.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/kinova_color_images" "/cam_1/color/image_raw" && python bag_to_colorImages.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/external_color_images" "/cam_2/color/image_raw" && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_images.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/external_depth_images" "/cam_2/depth/image_rect_raw" && rosrun pcl_ros bag_to_pcd /media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag /cam_1/depth/points /media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/kinova_pointClouds;done
+
+for FILE in *.bag; do rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/$FILE.bag /cam_1/depth/points /media/imero/Elements/experimentData/${FILE//.bag/""}/kinova_pointClouds;done
+
+cd /media/imero/Elements/experimentData/flarp_pull_2 && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir external_color_images && mkdir external_depth_images
+
+rosbag record -O bb_lines_5 /cam_1/color/image_raw /cam_1/depth/image_raw /cam_1/depth/points /my_gen3/base_feedback /cam_2/color/image_raw /cam_2/depth/image_rect_raw
+
+for topic in `rostopic list -b camera_info.bag` ; do rostopic echo -p -b camera_info.bag $topic > camera_info-${topic//\//_}.csv ; done
+
+for FILE in *.bag; do cd /media/imero/Elements/bagfiles && for topic in `rostopic list -b ${FILE//.bag/""}.bag` ; do rostopic echo -p -b ${FILE//.bag/""}.bag $topic > ${FILE//.bag/""}-${topic//\//_}.csv ; done && mv /media/imero/Elements/bagfiles/${FILE//.bag/""}-*.csv /media/imero/Elements/experimentData/${FILE//.bag/""}/csvFiles;done
+
+for FILE in flarp_push_*.bag; do cd /media/imero/Elements/experimentData && mkdir ${FILE//.bag/""} && cd ${FILE//.bag/""} && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images ;done
+
+cd /media/imero/Elements/experimentData && mkdir flarp_pull_1 && cd flarp_pull_1 && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir external_color_images && mkdir external_depth_images
+
+for FILE in flarp_*.bag; do mv /media/imero/Elements/bagfiles/${FILE//.bag/""}-*.csv /media/imero/Elements/experimentData/${FILE//.bag/""}/csvFiles;done
+
+for FILE in bb_letters*.bag; do cd /media/imero/kinova_experimen/experimentData && mkdir ${FILE//.bag/""} && cd ${FILE//.bag/""} && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images ;done
+
+rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/pp_angles_1.2.bag /cam_1/depth/points /media/imero/Elements/experimentData/pp_angles_1.2/kinova_pointClouds
+
+for topic in `rostopic list -b flarp_push_2.bag` ; do rostopic echo -p -b flarp_push_2.bag $topic > flarp_push_2-${topic//\//_}.csv ; done && mv /media/imero/Elements/bagfiles/flarp_push_2-*.csv /media/imero/Elements/experimentData/flarp_push_2/csvFiles && rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/flarp_push_2.bag /cam_1/depth/points /media/imero/Elements/experimentData/flarp_push_2/kinova_pointClouds
+
+for FILE in *.bag; do cd ~/Desktop/picke23a/data_recording_basics && python bag_to_colorImages.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/external_color_images" "/cam_2/color/image_raw" && cd ~/Desktop/picke23a/data_recording_basics && python bag_to_images.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/kinova_experimen/bagfiles/${FILE//.bag/""}.bag" "/media/imero/kinova_experimen/experimentData/${FILE//.bag/""}/external_depth_images" "/cam_2/depth/image_rect_raw" ;done
+
+rosbag record -O bb_letters_5 /cam_1/color/image_raw /cam_1/depth/image_raw /cam_1/depth/points /my_gen3/base_feedback /cam_2/color/image_raw /cam_2/depth/image_rect_raw
+
+
+
+
+
+
+
+

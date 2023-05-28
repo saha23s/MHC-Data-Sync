@@ -1,0 +1,32 @@
+rosbag record -b 4096 -O flarp_pull_2 /cam_1/color/image_raw /cam_1/depth/image_raw /cam_1/depth/points /my_gen3/base_feedback /cam_2/color/image_raw /cam_2/depth/image_rect_raw
+
+for topic in `rostopic list -b pp_1.bag` ; do rostopic echo -p -b pp_1.bag $topic > pp.1-${topic//\//_}.csv ; done
+
+for topic in `rostopic list -b pp_1.bag` ; do rostopic echo -p -b pp_1.bag $topic > pp_1-${topic//\//_}.csv ; done
+
+python bag_to_images.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/external_depth_images" "/cam_2/depth/image_rect_raw" 
+
+rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/pp_1.bag /camera/depth/points /media/imero/Elements/experimentData/pp_1/kinova_pointClouds
+
+
+rostopic echo -p -b subse
+t2.bag /my_gen3/base_feedback > subset2-my_gen3_base_feedback.csv
+
+
+
+cd /media/imero/Elements/experimentData && mkdir pp_1 && cd pp_1 && mkdir csvFiles && mkdir kinova_color_images && mkdir kinova_depth_images && mkdir kinova_pointClouds && mkdir external_color_images && mkdir external_depth_images
+
+cd /media/imero/Elements/bagfiles && for topic in `rostopic list -b pp_1.bag` ; do rostopic echo -p -b pp_1.bag $topic > pp_1-${topic//\//_}.csv ; done
+
+cd /media/imero/Elements/bagfiles && mv /media/imero/Elements/bagfiles/pp_1-*.csv /media/imero/Elements/experimentData/pp_1/csvFiles
+
+cd ~/Desktop/picke23a/data_recording_basics && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/kinova_color_images" "/cam_1/color/image_raw" && python bag_to_colorImages.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/external_color_images" "/cam_2/color/image_raw" 
+
+cd ~/Desktop/picke23a/data_recording_basics && python bag_to_images.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/kinova_depth_images" "/cam_1/depth/image_raw" && python bag_to_images.py "/media/imero/Elements/bagfiles/pp_1.bag" "/media/imero/Elements/experimentData/pp_1/external_depth_images" "/cam_2/depth/image_rect_raw" 
+
+rosrun pcl_ros bag_to_pcd /media/imero/Elements/bagfiles/pp_1.bag /cam_1/depth/points /media/imero/Elements/experimentData/pp_1/kinova_pointClouds
+
+
+
+
+
