@@ -1,0 +1,8 @@
+To play the color stream:
+
+gst-launch-1.0 rtspsrc location=rtsp://192.168.1.10/color latency=30 ! rtph264depay ! avdec_h264 ! autovideosink
+
+To play the depth stream:
+
+A suggestion for how to play and record a stream:
+gst-launch-1.0 -v autovideosrc ! tee name = t ! queue ! omxh264enc ! 'video/x-h264, stream-format=(string)byte-stream' ! h264parse ! qtmux ! filesink location=test.mp4 t. ! queue ! videoscale ! video/x-raw, width 480,height=270 ! xvimagesink -e sync=false
